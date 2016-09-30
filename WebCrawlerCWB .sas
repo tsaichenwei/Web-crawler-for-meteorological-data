@@ -214,13 +214,3 @@ data _null_; set work.stno_z2;
 call execute('%stno(' || stno || ',' || year || ',' || month || ')');
 run;
 
-
-
-GOPTIONS NOACCESSIBLE;
-%LET _CLIENTTASKLABEL=;
-%LET _CLIENTPROJECTPATH=;
-%LET _CLIENTPROJECTNAME=;
-%LET _SASPROGRAMFILE=;
-
-;*';*";*/;quit;run;
-ODS _ALL_ CLOSE;
