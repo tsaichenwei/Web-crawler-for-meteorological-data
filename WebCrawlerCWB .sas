@@ -96,8 +96,6 @@ PROC SQL;
 QUIT;
 
 
-%_eg_conditional_dropds(WORK.QUERY_FOR_SOURCE2_0001);
-
 PROC SQL;
    CREATE TABLE WORK.QUERY_FOR_SOURCE2_0001 AS 
    SELECT t1.WEBPAGE, 
@@ -162,11 +160,11 @@ data _null_; set info(drop=content);
 call execute('%doloop(' || year || ',' || month || ')');
 run;
 
-data st_&st._&yr; /*¸ê®Æ³B²z ¶·³]¸m¸ê®Æ°_©l¦~«× ¥Ø«e¬°¡G01*/
+data st_&st._&yr; /*è³‡æ–™è™•ç† é ˆè¨­ç½®è³‡æ–™èµ·å§‹å¹´åº¦ ç›®å‰ç‚ºï¼š01*/
 set result_01-result_%sysfunc(putn(&mth,z2.));
 run;
 
-data st_&st; /*¸ê®Æ³B²z ¶·³]¸m¸ê®Æ°_©l¦~«× ¥Ø«e¬°¡G2015*/
+data st_&st; /*è³‡æ–™è™•ç† é ˆè¨­ç½®è³‡æ–™èµ·å§‹å¹´åº¦ ç›®å‰ç‚ºï¼š2015*/
 set st_&st._2015-st_&st._&yr;
 run;
 
