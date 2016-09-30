@@ -122,7 +122,7 @@ PROC SQL;
       WHERE (CALCULATED mod) = 1;
 QUIT;
 
-
+/*If you run in SAS University(SAS Studio),should setting function substr <poistion>. year:14 , month:19 */
 data info;set WORK.QUERY_FOR_SOURCE2_0001 (keep=content firstobs=3 obs=3);
 year=substr(content,10,4);
 month=substr(content,15,2);
@@ -168,7 +168,7 @@ data st_&st; /*資料處理 須設置資料起始年度 目前為：2015*/
 set st_&st._2015-st_&st._&yr;
 run;
 
-
+/*The WORK.ST_POOL is all of station and period initial datalist.*/
 PROC SQL;
    CREATE TABLE WORK.ST_POOL AS 
    SELECT t1.station_no, 
