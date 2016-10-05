@@ -55,6 +55,8 @@ data stno_z2;
 467990
 */
 
+DATA WORK.ST_CONTAIN;RUN;
+
 %macro stno(st,yr,mth);
 FILENAME SOURCE URL "http://e-service.cwb.gov.tw/HistoryDataQuery/MonthDataController.do?command=viewMain&station=&st&stname=%25E9%259E%258D%25E9%2583%25A8&datepicker=&yr-&mth" DEBUG;
 DATA SOURCE1;
@@ -169,8 +171,25 @@ set st_&st._2015-st_&st._&yr;
 run;
 
 /*The WORK.ST_POOL is all of station and period initial datalist.*/
+DATA WORK.ST_CONTAIN; SET WORK.ST_CONTAIN WORK.st_&st;
+if Column1 ne '';
+RUN;
+
 PROC SQL;
    CREATE TABLE WORK.ST_POOL AS 
+   SELECT DISTINCT *
+      FROM WORK.ST_CONTAIN;
+QUIT;
+
+%mend;
+
+data _null_; set work.stno_z2;
+call execute('%stno(' || stno || ',' || year || ',' || month || ')');
+run;
+
+/*RENAME FROM WORK.ST_POOL*/
+PROC SQL;
+   CREATE TABLE WORK.ST_RENAME AS 
    SELECT t1.station_no, 
           t1.year, 
           t1.month, 
@@ -206,11 +225,9 @@ PROC SQL;
           t1.Column30 AS global_radiation, 
           t1.Column31 AS VisbMean, 
           t1.Column32 AS evaporation_A_type_pan
-      FROM WORK.st_&st t1;
+      FROM WORK.ST_POOL t1
+   		ORDER BY t1.station_no,
+                t1.year,
+				t1.month;
 QUIT;
-%mend;
-
-data _null_; set work.stno_z2;
-call execute('%stno(' || stno || ',' || year || ',' || month || ')');
-run;
 
