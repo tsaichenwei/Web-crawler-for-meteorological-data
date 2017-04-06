@@ -110,7 +110,7 @@ PROC SQL;
       FROM WORK.QUERY_FOR_SOURCE2_0000 t1;
 QUIT;
 
-data daily_mod; set WORK.QUERY_FOR_SOURCE2_0001(keep=content station_no firstobs=165 obs=2208) ;
+data daily_mod; set WORK.QUERY_FOR_SOURCE2_0001(keep=content station_no firstobs=164 obs=2208) ;
 no=_n_;
 run;
 
